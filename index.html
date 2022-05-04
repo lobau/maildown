@@ -19,9 +19,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/theme/juejin.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/theme/base16-light.min.css" />
 
-  <script src="script.js"></script>
+  <script src="index.js"></script>
+  <link type="text/css" rel="stylesheet" href="index.css" />
 
-  <style type='text/css'>
+  <!-- <style type='text/css'>
     * {
       padding: 0;
       margin: 0;
@@ -34,28 +35,136 @@
       font-size: 18px;
       color: #444;
       overflow-x: hidden;
+      /* overflow: hidden; */
     }
 
     .main_layout {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 36rem 1fr;
       width: 100vw;
       height: 100vh;
+      /* overflow: hidden; */
+    }
+
+    #htmlContainer {
+      position: fixed;
+      top: calc(100% - 72px);
+      right: 0px;
+      z-index: 999;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transition: all 0.35s ease-in-out;
+      box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.15);
+    }
+
+    #code {
+      outline: 1px solid red;
+      height: calc(100% - 48px);
+    }
+
+    .toolbar {
+      background-color: white;
+      padding: 1rem;
     }
 
     .CodeMirror {
       width: 100%;
       height: 100%;
     }
-  </style>
+
+    #toggleContainer {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    input[type=checkbox] {
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+
+    label {
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 48px;
+      height: 32px;
+      box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.15);
+      background: moccasin;
+      display: block;
+      border-radius: 20px;
+      position: relative;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    label:after {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 16px;
+      transition: 0.2s;
+      box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.35), 0px 8.71728px 17.2408px rgba(0, 0, 0, 0.0185187), 0px 2.76435px 5.19761px rgba(0, 0, 0, 0.0225848), 0px 1.18477px 2.15882px rgba(0, 0, 0, 0.0264039), 0px 0.409114px 0.780803px rgba(0, 0, 0, 0.04);
+    }
+
+    input:checked+label {
+      background: PaleGreen;
+    }
+
+    input:checked+label:after {
+      left: calc(100% - 4px);
+      transform: translateX(-100%);
+    }
+
+    label:active:after {
+      width: 32px;
+    }
+  </style> -->
 
 </head>
 
 <body>
   <div class="main_layout">
-    <textarea id="editor" style="visibility: hidden;"></textarea>
-    <div id="render"></div>
-    <textarea id="htmlCode" style="visibility: hidden;"></textarea>
+    <div class="editorContainer">
+      <textarea id="editor" style="visibility: hidden;"></textarea>
+    </div>
+    <div class="renderContainer">
+      <div class="toolbar">
+        <div id="toggleContainer">
+          <input type="checkbox" id="switchElement">
+          <label id="billString" for="switchElement">Toggle</label>
+        </div>
+      </div>
+
+      <div id="render"></div>
+      <div id="code">
+        <textarea id="htmlCode" style="visibility: hidden;"></textarea>
+      </div>
+    </div>
+
+    <script type='text/javascript'>
+      window.addEventListener("load", function () {
+        let toggleSwitch = () => {
+          if (document.querySelector('#switchElement').checked) {
+            document.querySelector("#render").style.display = "none";
+            document.querySelector("#code").style.display = "block";
+          } else {
+            document.querySelector("#render").style.display = "block";
+            document.querySelector("#code").style.display = "none";
+          }
+        }
+        document.querySelector('#switchElement').onclick = toggleSwitch;
+
+        toggleSwitch();
+      });
+    </script>
+
   </div>
 </body>
 

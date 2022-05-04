@@ -36,7 +36,7 @@ const renderer = {
   },
   table(header, body) {
     return `
-        <table border="0" cellspacing="0" width="100%" style="width: 100%; padding: 0px; margin: 20px 0px;  border-collapse: collapse;">
+        <table border="0" cellspacing="0" width="100%" style="width: 100%; padding: 0px; margin: 20px 0px; border-collapse: collapse;">
             <thead style="${textbase} font-size: 14px; font-weight: bold; line-height: 24px; margin: 0px; padding: 0px;">${header}</thead>
             <tbody style="${textbase} font-size: 16px; line-height: 24px; margin: 0px; padding: 0px;">${body}</tbody>
         </table>
@@ -53,10 +53,10 @@ const renderer = {
     `;
   },
   blockquote(quote) {
-    return `<blockquote style="background: white; margin: 20px 0px 20px 0px; padding: 10px 15px; border: 1px solid ${style.border};">${quote}</blockquote>`;
+    return `<blockquote style="background: white; margin: 20px 0px 20px 0px; padding: 10px 15px 5px 15px; border: 1px solid ${style.border}; border-radius: 10px;">${quote}</blockquote>`;
   },
   image(href, title, text) {
-    return `<img style="margin: 20px 0px 10px 0px; border: 1px solid ${style.border};" width="100%" src="${href}" alt="${text}" title="${title}" />`;
+    return `<img style="margin: 20px 0px 10px 0px; border-radius: 10px;" width="100%" src="${href}" alt="${text}" title="${title}" />`;
   },
   link(href, title, text) {
     return `<a target="_blank" style="color: ${style.accent}; font-weight: bold;" href="${href}" title="${title}">${text}</a>`;
@@ -87,30 +87,70 @@ const render = () => {
 
   // Generate the data object
   let bodyHtml = marked.parse(markdown);
+  let footer = `<div style="padding: 60px 0px; font-family: system-ui, sans-serif; color:#949CBA; font-size: 14px; line-height: 20px;">
+  <div>This email was sent to you because you subscribed to the newsletter on {{baseUrl}}.</div>
+  <br />
+  <div>{{Sender_Name}}</div>
+  <div>{{Sender_Address}}</div>
+  <div>{{Sender_City}}, {{Sender_State}} {{Sender_Zip}}</div>
+  <div><a href="{{{unsubscribe}}}">Unsubscribe</a></div>
+</div>
+  `;
 
   document.getElementById("render").innerHTML = `
     <div style="max-width: 640px; margin: 0px auto; padding: 10px">
       ${bodyHtml}
+      ${footer}
     </div>`;
 
-  window.htmlCode.setValue(format(bodyHtml));
+  let htmlCode = `<html lang="en">
+
+  <head>
+    <title>{{title}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  </head>
+
+  <body style="margin: 0px; padding: 0px">
+    <div style="max-width: 640px; margin: 0px auto; padding: 10px">
+      ${format(bodyHtml)}
+      ${footer}
+    </div>
+  </body>
+</html>`;
+
+  window.htmlCode.setValue(format(htmlCode));
 };
 
 window.onload = () => {
   let markdown = localStorage.getItem("markdown")
         ? localStorage.getItem("markdown")
-        : `# PopNews №8
-Welcome to PopNews №8 for May 2022 🎉
-        
-If you are on this list, it's because you help us in one way or another, so thank you again! 👋
-        
+        : `# Newsletter №1
+Welcome to our newsletter 👋
+
+![placeholder image](https://avetenebrae.s3.amazonaws.com/placeholder.jpg)
+
 ## 🌟 Product Updates
         
 Maxime itaque ab eveniet, veniam nam optio illum fugiat assumenda tempore recusandae itaque rem, voluptatibus quis natus saepe ad.
-        
-> Nemo harum soluta a voluptate deserunt nihil voluptatum doloribus amet, omnis odio impedit sequi explicabo suscipit esse doloribus consequatur iste ducimus, obcaecati vel distinctio magnam ratione perferendis accusamus, perspiciatis dolore velit vitae veritatis eaque deleniti alias autem dicta nemo?
+
+|Header  |Header|
+|:---    |:---|
+|Data A  |Alice was not a bit hurt|
+|Data B  |Away went Alice like the wind|
+
+**New** bugs and _some_ regressions:
+- Ratione quam laboriosam sed, accusantium quasi quo dolorem error numquam nam quibusdam inventore optio, dolorum assumenda impedit consequatur explicabo?
+- A communi observantia non est recedendum.
+- Curabitur blandit tempus ardua ridiculus sed magna.
+
 
 ## 🤔 How to help?
+
+Aliquid nam quaerat, ratione fugiat repellat odit ipsum, eaque nisi itaque perspiciatis, magnam quos nobis accusantium possimus illo.
+
+> Nemo harum soluta a voluptate deserunt nihil voluptatum doloribus amet, omnis odio impedit sequi explicabo suscipit esse doloribus consequatur iste ducimus, obcaecati vel distinctio magnam ratione perferendis accusamus, perspiciatis dolore velit vitae veritatis eaque deleniti alias autem dicta nemo?
 
 Aliquid nam quaerat, ratione fugiat repellat odit ipsum, eaque nisi itaque perspiciatis, magnam quos nobis accusantium possimus illo.
 
