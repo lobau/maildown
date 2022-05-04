@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>MailDown</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico" />
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.63.1/lib/codemirror.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/mode/markdown/markdown.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/mode/xml/xml.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.63.1/lib/codemirror.min.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/theme/material.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/theme/nord.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/theme/juejin.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.3/theme/base16-light.min.css" />
+
+  <script src="script.js"></script>
+
+  <style type='text/css'>
+    * {
+      padding: 0;
+      margin: 0;
+      border: none;
+    }
+
+    html,
+    body {
+      background: white;
+      font-size: 18px;
+      color: #444;
+      overflow-x: hidden;
+    }
+
+    .main_layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .CodeMirror {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="main_layout">
+    <textarea id="editor" style="visibility: hidden;"></textarea>
+    <div id="render"></div>
+    <textarea id="htmlCode" style="visibility: hidden;"></textarea>
+  </div>
+</body>
+
+</html>
